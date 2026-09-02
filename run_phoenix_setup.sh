@@ -16,7 +16,9 @@ docker compose up -d postgres phoenix
 docker compose exec -T phoenix bash -lc '
 set -euo pipefail
 
-mix local.hex --force
+if ! mix local.hex --force; then
+  mix archive.install github hexpm/hex branch latest --force
+fi
 mix archive.install hex phx_new --force
 
 mkdir -p environment
